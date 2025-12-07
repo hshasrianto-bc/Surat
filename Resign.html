@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>3D Envelope Animation</title>
+<style>
+    body {
+        background: linear-gradient(135deg, #eaeaea, #ffffff);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+    }
+
+    .scene {
+        perspective: 1500px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    /* Container amplop */
+    .envelope-wrapper {
+        position: relative;
+        width: 330px;
+        height: 220px;
+        transform-style: preserve-3d;
+        transition: transform 0.8s ease;
+    }
+
+    /* Body amplop */
+    .envelope-body {
+        width: 100%;
+        height: 100%;
+        background: #f2d7b5;
+        border-radius: 6px;
+        position: absolute;
+        box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+    }
+
+    /* Tutup amplop (lipatan segitiga) */
+    .flap {
+        width: 100%;
+        height: 100%;
+        background: #e6c29c;
+        clip-path: polygon(0 0, 100% 0, 50% 65%);
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform-origin: top;
+        transform: rotateX(0deg);
+        transition: transform 1s ease;
+        box-shadow: inset 0 -10px 25px rgba(0,0,0,0.18);
+    }
+
+    /* Lipatan bawah */
+    .bottom-fold {
+        width: 100%;
+        height: 100%;
+        background: #dcb68d;
+        clip-path: polygon(0 100%, 100% 100%, 50% 40%);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 2;
+    }
+
+    /* Surat (PDF) */
+    .letter {
+        width: 290px;
+        height: 380px;
+        background: white;
+        position: absolute;
+        top: 70px;
+        left: 20px;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 1s ease;
+        border-radius: 4px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        pointer-events: none;
+    }
+
+    /* Amplop terbuka */
+    .open .flap {
+        transform: rotateX(-170deg);
+    }
+
+    .open .envelope-wrapper {
+        transform: translateY(-20px) rotateX(10deg);
+    }
+
+    .open .letter {
+        opacity: 1;
+        transform: translateY(-200px);
+        pointer-events: all;
+    }
+</style>
+</head>
+<body>
+
+<div class="scene" onclick="openEnvelope()">
+    <div class="envelope-wrapper" id="envelope">
+        <div class="envelope-body"></div>
+        <div class="flap"></div>
+        <div class="bottom-fold"></div>
+
+        <div class="letter">
+            <embed src="Resign.pdf" type="application/pdf" width="100%" height="100%">
+        </div>
+    </div>
+    <p>Klik amplop untuk membuka surat</p>
+</div>
+
+<script>
+function openEnvelope() {
+    document.getElementById("envelope").classList.toggle("open");
+}
+</script>
+
+</body>
+</html>
